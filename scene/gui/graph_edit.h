@@ -224,7 +224,7 @@ private:
 	Vector2 drag_accum;
 
 	float zoom = 1.0;
-	float zoom_step = 1.2;
+	float zoom_step = 1.5;
 	// Proper values set in constructor.
 	float zoom_min = 0.0;
 	float zoom_max = 0.0;
