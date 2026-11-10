@@ -1269,6 +1269,7 @@ void SpriteFramesEditor::_animation_add() {
 	undo_redo->commit_action();
 
 	animations->grab_focus();
+	animations->call_deferred("edit_selected", true);
 }
 
 void SpriteFramesEditor::_animation_duplicate() {
