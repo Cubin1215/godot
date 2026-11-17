@@ -248,7 +248,8 @@ class SpriteFramesEditor : public EditorDock {
 
 	StringName _find_next_animation();
 	String _generate_unique_animation_name(const String &p_base_name) const;
-
+	
+	void _animation_list_gui_input(const Ref<InputEvent> &p_event);
 	void _frame_list_gui_input(const Ref<InputEvent> &p_event);
 	void _frame_list_item_selected(int p_index, bool p_selected);
 

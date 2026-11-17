@@ -1269,6 +1269,7 @@ void SpriteFramesEditor::_animation_add() {
 	undo_redo->commit_action();
 
 	animations->grab_focus();
+	animations->call_deferred("edit_selected", true);
 }
 
 void SpriteFramesEditor::_animation_duplicate() {
@@ -1489,6 +1490,20 @@ String SpriteFramesEditor::_generate_unique_animation_name(const String &p_base_
 		break;
 	}
 	return new_name;
+}
+
+
+void SpriteFramesEditor::_animation_list_gui_input(const Ref<InputEvent> &p_event) {
+    Ref<InputEventKey> key = p_event;
+
+    if (key.is_valid() && key->is_pressed() && !key->is_echo() &&
+            key->get_keycode() == Key::F2 &&
+            !key->is_command_or_control_pressed() &&
+            !key->is_shift_pressed() && !key->is_alt_pressed() &&
+            animations->get_selected() != nullptr) {
+        animations->edit_selected();
+        accept_event();
+    }
 }
 
 void SpriteFramesEditor::_frame_list_gui_input(const Ref<InputEvent> &p_event) {
@@ -2260,6 +2275,7 @@ SpriteFramesEditor::SpriteFramesEditor() {
 	animations->set_v_size_flags(SIZE_EXPAND_FILL);
 	animations->set_hide_root(true);
 	animations->set_auto_translate_mode(AUTO_TRANSLATE_MODE_DISABLED);
+	animations->connect("gui_input", callable_mp(this, &SpriteFramesEditor::_animation_list_gui_input));
 	// HACK: The cell_selected signal is emitted before the FPS spinbox loses focus and applies the change.
 	animations->connect("cell_selected", callable_mp(this, &SpriteFramesEditor::_animation_selected), CONNECT_DEFERRED);
 	animations->connect("item_edited", callable_mp(this, &SpriteFramesEditor::_animation_name_edited));
